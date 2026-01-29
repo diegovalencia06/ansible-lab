@@ -19,7 +19,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
 
       - name: Instalar Ansible
-        run: pip install ansible
+        run: pip3 install ansible --break-system-packages
 
       - name: Ejecutar Playbook
         run: |
