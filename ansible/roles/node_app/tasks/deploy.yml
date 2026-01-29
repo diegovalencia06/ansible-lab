@@ -26,7 +26,7 @@
   dest: /etc/systemd/system/myapp.service
   become: yes
   notify:
- - Reload systemd
+- Reload systemd
 - name: Ensure service is started and enabled
   systemd:
   name: myapp
