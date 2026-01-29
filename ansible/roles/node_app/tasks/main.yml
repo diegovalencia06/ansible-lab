@@ -2,8 +2,8 @@
 # tareas idempotentes básicas
 - name: Ensure git is present
   apt:
-  name: git
-  state: present
+    name: git
+    state: present
   become: yes
 - name: Ensure node (and npm) are installed (Debian example)
   apt:
