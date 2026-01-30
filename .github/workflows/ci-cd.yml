@@ -18,8 +18,11 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
-      - name: Instalar Ansible
-        run: pip3 install ansible --break-system-packages
+      - name: Install Ansible
+        run: |
+          sudo apt update
+          # Instalamos ansible directamente con apt
+          sudo apt install -y ansible sshpass
 
       - name: Ejecutar Playbook
         run: |
