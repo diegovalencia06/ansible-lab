@@ -5,31 +5,23 @@
     owner: deploy
     group: deploy
     mode: '0755'
-
-- name: Checkout app code from repo (pull latest)
+- name: Checkout app code
   git:
     repo: 'https://github.com/diegovalencia06/ansible-lab.git'
     dest: /home/deploy/apps/myapp
     version: "{{ git_ref | default('main') }}"
-    force: yes
-    update: yes
-  vars:
-    ansible_ssh_extra_args: '-o StrictHostKeyChecking=no'
+  force: yes
   become: no
-
 - name: Install npm dependencies
-  npm:
-    path: /home/deploy/apps/myapp
-    production: yes
-
+  command: npm install
+  args:
+    chdir: /home/deploy/apps/myapp/app <-- ¡CORRECCION IMPORTANTE!
 - name: Copy systemd service file
   template:
     src: node-app.service.j2
     dest: /etc/systemd/system/myapp.service
   become: yes
-  notify:
-    - Reload systemd
-
+  notify: Reload systemd
 - name: Ensure service is started and enabled
   systemd:
     name: myapp

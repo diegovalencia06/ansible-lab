@@ -1,14 +1,17 @@
----
-# tareas idempotentes básicas
 - name: Ensure git is present
   apt:
     name: git
     state: present
   become: yes
-- name: Ensure node (and npm) are installed (Debian example)
+- name: Ensure nodejs is present
   apt:
     name: nodejs
     state: present
   become: yes
+- name: Ensure npm is present
+  apt:
+    name: npm
+    state: present
+  become: yes
 - name: Include deploy tasks
-  import_tasks: deploy.yml
+  import_tasks: deploy.ym
