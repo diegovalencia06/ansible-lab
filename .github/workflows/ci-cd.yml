@@ -1,0 +1,41 @@
+name: CI/CD - Ansible Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+      - name: Install deps & run tests
+        run: |
+          cd app
+          npm install
+          npm test
+
+  deploy:
+    needs: test
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Run Ansible Playbook
+        env:
+          GIT_REF: ${{ github.ref_name }}
+          ANSIBLE_HOST_KEY_CHECKING: "False"
+        run: |
+          cd ansible
+          export ANSIBLE_ROLES_PATH=$(pwd)/roles
+          ansible-playbook playbooks/deploy.yml -i inventories/production.yml --private-key ~/.ssh/id_rsa

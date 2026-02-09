@@ -1,0 +1,26 @@
+- name: Ensure git is present
+  apt:
+    name: git
+    state: present
+  become: yes
+
+- name: Ensure nodejs is present
+  apt:
+    name: nodejs
+    state: present
+  become: yes
+
+- name: Ensure npm is present
+  apt:
+    name: npm
+    state: present
+  become: yes
+
+- name: Include deploy tasks
+  import_tasks: deploy.yml
+
+- name: Restart Node.js app to apply changes
+  service:
+    name: myapp # <--- ASEGÚRATE DE QUE ESTE ES EL NOMBRE DE TU SERVICIO
+    state: restarted
+  become: yes
