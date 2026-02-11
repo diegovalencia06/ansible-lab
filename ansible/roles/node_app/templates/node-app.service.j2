@@ -3,9 +3,9 @@ Description=My Node.js App
 After=network.target
 
 [Service]
-User=deploy
-WorkingDirectory=/home/deploy/apps/myapp/app
-ExecStart=/usr/bin/node /home/deploy/apps/myapp/app/index.js
+User=diegoexamen
+WorkingDirectory=/home/diegoexamen/apps/myapp/app
+ExecStart=/usr/bin/node /home/diegoexamen/apps/myapp/app/index.js
 Restart=always
 Environment=NODE_ENV=production
 
