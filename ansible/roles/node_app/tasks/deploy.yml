@@ -1,15 +1,15 @@
 - name: Ensure app dir exists
   file:
-    path: /home/deploy/apps/myapp
+    path: /home/diegoexamen/apps/myapp
     state: directory
-    owner: deploy
-    group: deploy
+    owner: diegoexamen
+    group: diegoexamen
     mode: "0755"
 
 - name: Checkout app code
   git:
     repo: "https://github.com/diegovalencia06/ansible-lab.git"
-    dest: /home/deploy/apps/myapp
+    dest: /home/diegoexamen/apps/myapp
     version: "{{ git_ref | default('main') }}"
     force: yes
   become: no
@@ -17,7 +17,7 @@
 - name: Install npm dependencies
   command: npm install
   args:
-    chdir: /home/deploy/apps/myapp/app
+    chdir: /home/diegoexamen/apps/myapp/app
 
 - name: Copy systemd service file
   template:
@@ -32,4 +32,3 @@
     state: started
     enabled: yes
   become: yes
-
